@@ -98,42 +98,31 @@ Stores user information and account balance.
 #### 2) `teams`
 Represents each national team.
 - `id` (BIGINT, PK)  
-- `name` (TEXT) – team name (e.g., Argentina)  
-- `country_code` (TEXT) – 3-letter FIFA code  
-- `group_name` (TEXT) – group label (A–H)
-
-#### 3) `players`
-Links individual players to their team.
-- `id` (BIGINT, PK)  
-- `name` (TEXT)  
-- `team_id` (BIGINT, FK → teams.id)  
-- `position` (TEXT)
-
-#### 4) `matches`
-Stores match information and outcomes.
-- `id` (BIGINT, PK)  
-- `team1_id` (BIGINT, FK → teams.id)  
-- `team2_id` (BIGINT, FK → teams.id)  
-- `match_date` (TIMESTAMPTZ)  
-- `score_team1` (INT)  
-- `score_team2` (INT)  
-- `status` (TEXT: scheduled, in_progress, finished)  
-- `stage` (TEXT) – tournament stage (Group, R16, etc.)  
-- `venue` (TEXT)  
-- `api_ref` (TEXT) – optional external reference
-
-#### 5) `bets`
-Tracks bets users place on matches.
-- `id` (BIGINT, PK)  
-- `user_id` (UUID, FK → users.id)  
-- `match_id` (BIGINT, FK → matches.id)  
-- `bet_type` (TEXT) – e.g., moneyline, spread, total  
-- `bet_on` (TEXT) – team or outcome bet on  
-- `odds` (NUMERIC) – American odds  
-- `amount` (NUMERIC) – wagered amount  
-- `result` (TEXT: pending, won, lost, void)  
-- `created_at` (TIMESTAMPTZ, default now)
----
+- '#Pl' float -Players Used
+- Age, float -Average Age of players used
+- Possession, float -Average Possession for team throughout tournament
+- PrgC, float - Progressive Passes Completed
+- ProP, float - Progressive Passes Attempted
+- Goals, float - Goals Scored
+- Ast, float- Assists
+- G + A, float, Goals + Assists
+- G + A - PK, float - Goals not including penalty kicks
+- xG, float - Expected Goals
+- xAG, float - Expected Goals Against
+- xG - xAG, float - Difference between Expected Goals and Excepted Goals against
+- Group_Stage_Opponent_1, text -Name of the first opponent the team faces during the group stage of a tournament.
+- Group_Stage_Opponent_2, text -Name of the second opponent in the group stage.
+- Group_Stage_Opponent_3, text -Name of the third opponent in the group stage.
+- RO16_Opponent, text -The opponent team the club/nation plays in the Round of 16 (knockout phase).
+- Quarterfinal_Opponent, text -The opposing team in the Quarter-Final round, if the team advances that far.
+- Column	Data Type	Explanation
+Group_Stage_Opponent_1	text	Name of the first opponent the team faces during the group stage of a tournament.
+Group_Stage_Opponent_2	text	Name of the second opponent in the group stage.
+Group_Stage_Opponent_3	text	Name of the third opponent in the group stage.
+RO16_Opponent	text	The opponent team the club/nation plays in the Round of 16 (knockout phase).
+Quarterfinal_Opponent	text -The opposing team in the Quarter-Final round, if the team advances that far.
+SemiFinal_Opponent, text	-The opponent faced in the Semi-Final stage of the tournament.
+Final_Opponent, text -The final match opponent if the team reaches the championship game.
 
 ## Setup Instructions
 
