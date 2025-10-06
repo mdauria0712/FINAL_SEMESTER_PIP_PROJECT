@@ -119,6 +119,38 @@ Quarterfinal_Opponent	text -The opposing team in the Quarter-Final round, if the
 SemiFinal_Opponent, text	-The opponent faced in the Semi-Final stage of the tournament.
 Final_Opponent, text -The final match opponent if the team reaches the championship game.
 
+#### 3) `players`
+Links individual players to their team.
+- `id` (BIGINT, PK)  
+- `name` (TEXT)  
+- `team_id` (BIGINT, FK → teams.id)  
+- `position` (TEXT)
+
+#### 4) `matches`
+Stores match information and outcomes.
+- `id` (BIGINT, PK)  
+- `team1_id` (BIGINT, FK → teams.id)  
+- `team2_id` (BIGINT, FK → teams.id)  
+- `match_date` (TIMESTAMPTZ)  
+- `score_team1` (INT)  
+- `score_team2` (INT)  
+- `status` (TEXT: scheduled, in_progress, finished)  
+- `stage` (TEXT) – tournament stage (Group, R16, etc.)  
+- `venue` (TEXT)  
+- `api_ref` (TEXT) – optional external reference
+
+#### 5) `bets`
+Tracks bets users place on matches.
+- `id` (BIGINT, PK)  
+- `user_id` (UUID, FK → users.id)  
+- `match_id` (BIGINT, FK → matches.id)  
+- `bet_type` (TEXT) – e.g., moneyline, spread, total  
+- `bet_on` (TEXT) – team or outcome bet on  
+- `odds` (NUMERIC) – American odds  
+- `amount` (NUMERIC) – wagered amount  
+- `result` (TEXT: pending, won, lost, void)  
+- `created_at` (TIMESTAMPTZ, default now)
+
 ### Security Model
 We use **Row Level Security (RLS)** to ensure that users can only view and modify their own data.  
 - Only authenticated users can add or view their personalized bet analyses.
