@@ -163,6 +163,10 @@ to public
 6
 using (
 
+### Setup Instructions
+pip install supabase
+python test_connection.py
+python db_tests.py
 
 ### Prerequisites
 - Python 3.10+
