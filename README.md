@@ -6,6 +6,77 @@
 Sports Betting Companion is a data-driven tool that helps users find undervalued soccer bets using historical data and live sportsbook odds. With the 2026 World Cup coming to the US, many new bettors may not know much about the teams or players. Our goal is to make it easier for them to make smarter, data-backed bets. By connecting historical performance data with sportsbook odds, users can identify which teams are statistically undervalued compared to their betting lines.
 
 ### Entity Relationship Diagram
+erDiagram
+    USERS {
+        id uuid PK
+        username text
+        email text
+        password_hash text
+        balance numeric
+        created_at timestamptz
+    }
+
+    TEAMS {
+        id bigint PK
+        PI float
+        Age float
+        Poss float
+        PrgC float
+        PrgP float
+        Gls float
+        Ast float
+        G_A float
+        G_PK float
+        G_A_PK float
+        xG float
+        xAG float
+        xG_plus_xAG float
+        npxG float
+        npxG_plus_xAG float
+        Group_Stage_Opponent_1 text
+        Group_Stage_Opponent_2 text
+        Group_Stage_Opponent_3 text
+        RO16_Opponent text
+        Quarterfinal_Opponent text
+        SemiFinal_Opponent text
+        Final_Opponent text
+    }
+
+    PLAYERS {
+        id bigint PK
+        name text
+        team_id bigint FK
+        position text
+    }
+
+    MATCHES {
+        id bigint PK
+        team1_id bigint FK
+        team2_id bigint FK
+        match_date timestamptz
+        score_team1 int
+        score_team2 int
+        status text
+    }
+
+    BETS {
+        id bigint PK
+        user_id uuid FK
+        match_id bigint FK
+        bet_type text
+        bet_on text
+        odds numeric
+        amount numeric
+        result text
+        created_at timestamptz
+    }
+
+    USERS ||--o{ BETS : places
+    MATCHES ||--o{ BETS : contains
+    TEAMS ||--o{ PLAYERS : has
+    TEAMS ||--o{ MATCHES : team1
+    TEAMS ||--o{ MATCHES : team2
+
 
 
 ### Tables Description
