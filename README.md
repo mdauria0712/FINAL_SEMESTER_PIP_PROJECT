@@ -122,7 +122,15 @@ Final_Opponent, text -The final match opponent if the team reaches the champions
 ### Security Model
 We use **Row Level Security (RLS)** to ensure that users can only view and modify their own data.  
 - Only authenticated users can add or view their personalized bet analyses.
-- Furthermore, for data privacy reasons, we restrict the Bets and Users tables to respect the users that use our product.  
+- Furthermore, for data privacy reasons, we restrict the Bets and Users tables to respect the users that use our product.
+- Code: alter policy "Enable read access for all users"
+2
+on "public"."matches"
+5
+to public
+6
+using (
+
 
 ### Prerequisites
 - Python 3.10+
