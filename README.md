@@ -62,6 +62,5 @@ We use **Row Level Security (RLS)** to ensure that users can only view and modif
 
 
 ### Prerequisites
-- Python 3.10+  
-- Supabase account  
-- Installed Supabase Python client  
+- Python 3.10+
+- Supabase account
