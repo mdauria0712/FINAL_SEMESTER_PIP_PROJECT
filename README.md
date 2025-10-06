@@ -124,7 +124,9 @@ Quarterfinal_Opponent	text -The opposing team in the Quarter-Final round, if the
 SemiFinal_Opponent, text	-The opponent faced in the Semi-Final stage of the tournament.
 Final_Opponent, text -The final match opponent if the team reaches the championship game.
 
-## Setup Instructions
+## Security Models
+
+ We restricted the security of the users and bets to only authenticated users like ourselves to respect data policy laws.  
 
 
 ### Prerequisites
