@@ -53,8 +53,7 @@ Combines odds and historical data to determine value bets.
 ### Security Model
 We use **Row Level Security (RLS)** to ensure that users can only view and modify their own data.  
 - Only authenticated users can add or view their personalized bet analyses.  
-- Public read-only access may be allowed for team and odds data.  
-- All tables with user-related or generated analysis data have RLS enabled with policies restricting access by `user_id`.
+
 
 ---
 
