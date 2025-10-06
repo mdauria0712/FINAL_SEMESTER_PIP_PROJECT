@@ -60,7 +60,8 @@ Tracks bets users place on matches.
 
 ### Security Model
 We use **Row Level Security (RLS)** to ensure that users can only view and modify their own data.  
-- Only authenticated users can add or view their personalized bet analyses.  
+- Only authenticated users can add or view their personalized bet analyses.
+- Furthermore, for data privacy reasons, we restrict the Bets and Users tables to respect the users that use our product.
 
 
 ---
