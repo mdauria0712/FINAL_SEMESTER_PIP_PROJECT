@@ -10,45 +10,53 @@ Sports Betting Companion is a data-driven tool that helps users find undervalued
 
 ### Tables Description
 
-#### 1. `teams`
-Stores information about each national team participating in the tournament.
-- `team_id` (UUID): Primary key  
-- `country_name` (TEXT): Full team name  
-- `fifa_rank` (INTEGER): Team’s latest FIFA ranking  
-- `confederation` (TEXT): Continental federation (e.g., UEFA, CONMEBOL)
+#### 1) `users`
+Stores user information and account balance.
+- `id` (UUID, PK)  
+- `username` (TEXT)  
+- `email` (TEXT, unique)  
+- `password_hash` (TEXT)  
+- `balance` (NUMERIC) – user’s account balance  
+- `created_at` (TIMESTAMPTZ, default now)
 
-#### 2. `sportsbooks`
-Holds data about each sportsbook used for odds collection.
-- `sportsbook_id` (UUID): Primary key  
-- `name` (TEXT): Sportsbook name (e.g., DraftKings, Caesars)  
-- `country` (TEXT): Country of operation
+#### 2) `teams`
+Represents each national team.
+- `id` (BIGINT, PK)  
+- `name` (TEXT) – team name (e.g., Argentina)  
+- `country_code` (TEXT) – 3-letter FIFA code  
+- `group_name` (TEXT) – group label (A–H)
 
-#### 3. `odds`
-Links teams to their current odds on each sportsbook.
-- `odds_id` (UUID): Primary key  
-- `team_id` (UUID, FK → teams.team_id): Associated team  
-- `sportsbook_id` (UUID, FK → sportsbooks.sportsbook_id): Associated sportsbook  
-- `win_tourney` (INTEGER): Odds to win the tournament  
-- `qualify_group` (INTEGER): Odds to qualify from group stage  
+#### 3) `players`
+Links individual players to their team.
+- `id` (BIGINT, PK)  
+- `name` (TEXT)  
+- `team_id` (BIGINT, FK → teams.id)  
+- `position` (TEXT)
 
-#### 4. `historical_stats`
-Stores past performance data for each team (to calculate undervalued bets).
-- `stat_id` (UUID): Primary key  
-- `team_id` (UUID, FK → teams.team_id): Associated team  
-- `year` (INTEGER): Year of the competition  
-- `wins` (INTEGER): Number of matches won  
-- `losses` (INTEGER): Number of matches lost  
-- `goals_for` (INTEGER): Goals scored  
-- `goals_against` (INTEGER): Goals conceded  
+#### 4) `matches`
+Stores match information and outcomes.
+- `id` (BIGINT, PK)  
+- `team1_id` (BIGINT, FK → teams.id)  
+- `team2_id` (BIGINT, FK → teams.id)  
+- `match_date` (TIMESTAMPTZ)  
+- `score_team1` (INT)  
+- `score_team2` (INT)  
+- `status` (TEXT: scheduled, in_progress, finished)  
+- `stage` (TEXT) – tournament stage (Group, R16, etc.)  
+- `venue` (TEXT)  
+- `api_ref` (TEXT) – optional external reference
 
-#### 5. `bet_analysis`
-Combines odds and historical data to determine value bets.
-- `analysis_id` (UUID): Primary key  
-- `team_id` (UUID, FK → teams.team_id)  
-- `expected_prob` (FLOAT): Probability based on historical stats  
-- `implied_prob` (FLOAT): Probability based on sportsbook odds  
-- `value_score` (FLOAT): Expected return difference  
-- `timestamp` (TIMESTAMPTZ): When analysis was run
+#### 5) `bets`
+Tracks bets users place on matches.
+- `id` (BIGINT, PK)  
+- `user_id` (UUID, FK → users.id)  
+- `match_id` (BIGINT, FK → matches.id)  
+- `bet_type` (TEXT) – e.g., moneyline, spread, total  
+- `bet_on` (TEXT) – team or outcome bet on  
+- `odds` (NUMERIC) – American odds  
+- `amount` (NUMERIC) – wagered amount  
+- `result` (TEXT: pending, won, lost, void)  
+- `created_at` (TIMESTAMPTZ, default now)
 
 ### Security Model
 We use **Row Level Security (RLS)** to ensure that users can only view and modify their own data.  
