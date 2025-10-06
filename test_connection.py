@@ -1,10 +1,14 @@
 import os
 from supabase import create_client, Client
 from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Load your Supabase credentials
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_ANON_KEY = os.getenv("SUPABASE_ANON_KEY")
+
 
 # Initialize the Supabase client
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_ANON_KEY)
